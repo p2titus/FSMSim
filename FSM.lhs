@@ -13,6 +13,4 @@ For the purposes of this, it will not matter if the machine is an NFA or DFA
 > current (_,_,_,_,f) qs []       = foldr (\q other -> other || q `elem` f) False qs -- accumulates the outcomes of states :: could this be rewritten without the lambda
 
 > transitions :: Eq a => [Transistion a] -> State -> a -> [State]
-> transitions ((x,y,z):xs) q w | q == x && w == y = z:(transitions xs q w)
->                              | otherwise        = transitions xs q w
-> transitions []           _ _ = [] -- fold?
+> transitions xs q w = foldr (\(x,y,z) acc -> if q == x && w == y then z:acc else acc) [] xs
